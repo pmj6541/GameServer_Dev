@@ -1,0 +1,46 @@
+# Visual Studio 기본
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# 빌드 결과물
+Debug/
+Release/
+x64/
+x86/
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.log
+*.ipch
+*.iobj
+*.ipdb
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+
+# Visual Studio Code 사용시
+.vscode/
+
+# Cursor 관련 (플러그인 캐시, 메타파일 방지)
+.cursor/
+*.cursor-tmp
+
+# CMake, 빌드 시스템 관련 (나중에 서버 쪽 cmake 프로젝트 확장 대비)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# OS별 잡파일
+.DS_Store
+Thumbs.db
+
+# 기타
+*.bak
+*.tmp
+*.swp
