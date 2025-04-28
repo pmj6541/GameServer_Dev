@@ -80,6 +80,7 @@ int main()
     while (g_bRunning)
     {
         SOCKET clientSocket = accept(serverSocket, (SOCKADDR*)&clientAddr, &clientAddrSize);
+        cout << "accept is called." << endl;
         if (clientSocket == INVALID_SOCKET) {
             if (!g_bRunning) break; // 서버 종료 신호 받으면 루프 탈출
             cerr << "Accept failed." << endl;
