@@ -94,9 +94,8 @@ int main() {
         timeout.tv_usec = 0;
 
         int selectResult = select(0, &readSet, nullptr, nullptr, &timeout);
-        cout << "select is called." << endl;
         if (selectResult == SOCKET_ERROR) {
-            cerr << "select() failed." << endl;
+            // cerr << "select() failed." << endl;
             break;
         }
 
@@ -112,7 +111,7 @@ int main() {
 
             SOCKET clientSocket = accept(serverSocket, (SOCKADDR*)&clientAddr, &addrLen);
             if (clientSocket != INVALID_SOCKET) {
-                cout << "New client connected!" << endl;
+                // cout << "New client connected!" << endl;
 
                 // Non-Blocking 모드 설정
                 u_long mode = 1;
@@ -130,12 +129,12 @@ int main() {
                 int recvSize = recv(client, buffer, sizeof(buffer), 0);
 
                 if (recvSize <= 0) {
-                    cout << "client disconnected!" << endl;
+                   //  cout << "client disconnected!" << endl;
                     closesocket(client);
                     disconnectedClients.emplace_back(client);
                 } else {
                     buffer[recvSize] = '\0';
-                    cout << "Received message: " << buffer << endl;
+                    // cout << "Received message: " << buffer << endl;
 
                     // 에코
                     send(client, buffer, recvSize, 0);

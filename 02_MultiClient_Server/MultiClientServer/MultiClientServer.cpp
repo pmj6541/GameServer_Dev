@@ -18,12 +18,12 @@ void HandleClient(SOCKET clientSocket)
     {
         int recvSize = recv(clientSocket, buffer, sizeof(buffer) - 1, 0);
         if (recvSize <= 0) {
-            cout << "Client disconnected." << endl;
+            // cout << "Client disconnected." << endl;
             break;
         }
 
         buffer[recvSize] = '\0';
-        cout << "Received from client: " << buffer << endl;
+        // cout << "Received from client: " << buffer << endl;
 
         send(clientSocket, buffer, recvSize, 0); // 에코
     }
@@ -80,14 +80,14 @@ int main()
     while (g_bRunning)
     {
         SOCKET clientSocket = accept(serverSocket, (SOCKADDR*)&clientAddr, &clientAddrSize);
-        cout << "accept is called." << endl;
+        // cout << "accept is called." << endl;
         if (clientSocket == INVALID_SOCKET) {
             if (!g_bRunning) break; // 서버 종료 신호 받으면 루프 탈출
-            cerr << "Accept failed." << endl;
+            // cerr << "Accept failed." << endl;
             continue;
         }
 
-        cout << "Client connected!" << endl;
+        // cout << "Client connected!" << endl;
         clientThreads.emplace_back(HandleClient, clientSocket);
     }
 
