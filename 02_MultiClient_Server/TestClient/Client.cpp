@@ -8,9 +8,7 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-using namespace std;
-
-atomic<int> successCount(0);
+std::atomic<int> successCount(0);
 
 int MESSAGE_COUNT = 10; // 연결당 보낼 메시지 수 (전역 변수)
 
@@ -34,14 +32,14 @@ void ConnectAndSend(int id)
     }
 
     for (int i = 0; i < MESSAGE_COUNT; i++) {
-        string message = "Message " + to_string(i) + " from client " + to_string(id) + "\n";
+        std::string message = "Message " + std::to_string(i) + " from client " + std::to_string(id) + "\n";
         send(sock, message.c_str(), message.size(), 0);
         // 필요하면 Sleep 추가
         // Sleep(10);
     }
 
     char buffer[512];
-    string pendingData;
+    std::string pendingData;
     int totalRecvCount = 0;
 
     while (totalRecvCount < MESSAGE_COUNT)
@@ -53,22 +51,22 @@ void ConnectAndSend(int id)
             pendingData += buffer;
 
             size_t pos;
-            while ((pos = pendingData.find('\n')) != string::npos)
+            while ((pos = pendingData.find('\n')) != std::string::npos)
             {
-                string completeMessage = pendingData.substr(0, pos);
-                // cout << "Received: " << completeMessage << endl;
+                std::string completeMessage = pendingData.substr(0, pos);
+                // std::cout << "Received: " << completeMessage << std::endl;
                 pendingData.erase(0, pos + 1);
                 totalRecvCount++;
             }
         }
         else if (recvSize == 0)
         {
-           // cout << "Server closed connection." << endl;
+           // std::cout << "Server closed connection." << std::endl;
             break;
         }
         else
         {
-            // cout << "Recv failed." << endl;
+            // std::cout << "Recv failed." << std::endl;
             break;
         }
     }
@@ -84,12 +82,12 @@ int main()
 
     const int CLIENT_COUNT = 1000; // 테스트할 클라이언트 수
 
-    cout << "Input MESSAGE_COUNT (each client): ";
-    cin >> MESSAGE_COUNT;
+    std::cout << "Input MESSAGE_COUNT (each client): ";
+    std::cin >> MESSAGE_COUNT;
 
-    vector<thread> clientThreads;
+    std::vector<std::thread> clientThreads;
 
-    auto startTime = chrono::high_resolution_clock::now();
+    auto startTime = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i < CLIENT_COUNT; ++i)
     {
@@ -102,12 +100,12 @@ int main()
             t.join();
     }
 
-    auto endTime = chrono::high_resolution_clock::now();
-    chrono::duration<double> elapsed = endTime - startTime;
+    auto endTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = endTime - startTime;
 
-    cout << "Total elapsed time: " << elapsed.count() << " seconds" << endl;
-    cout << "Success count: " << successCount << " / " << CLIENT_COUNT << endl;
-    cout << "Success rate: " << (double(successCount) / CLIENT_COUNT) * 100.0 << "%" << endl;
+    std::cout << "Total elapsed time: " << elapsed.count() << " seconds" << std::endl;
+    std::cout << "Success count: " << successCount << " / " << CLIENT_COUNT << std::endl;
+    std::cout << "Success rate: " << (double(successCount) / CLIENT_COUNT) * 100.0 << "%" << std::endl;
 
     WSACleanup();
     return 0;

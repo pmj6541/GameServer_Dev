@@ -7,22 +7,20 @@
 #define BLOCKING_MODE 0
 #define NON_BLOCKING_MODE 1
 
-using namespace std;
-
 SOCKET serverSocket = INVALID_SOCKET;
-vector<SOCKET> clientSockets;
+std::vector<SOCKET> clientSockets;
 bool g_bRunning = true;
 
 bool InitServer(){
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        cout << "WSAStartup failed" << endl;
+        std::cout << "WSAStartup failed" << std::endl;
         return false;
     }
 
     serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(serverSocket == INVALID_SOCKET){
-        cerr << "Socket creation failed." << endl;
+        std::cerr << "Socket creation failed." << std::endl;
         WSACleanup();
         return false;
     }
@@ -30,7 +28,7 @@ bool InitServer(){
     // Non-Blocking 모드 설정
     u_long mode = NON_BLOCKING_MODE;
     if (ioctlsocket(serverSocket, FIONBIO, &mode) == SOCKET_ERROR) {
-        cerr << "Failed to set non-blocking mode." << endl;
+        std::cerr << "Failed to set non-blocking mode." << std::endl;
         closesocket(serverSocket);
         WSACleanup();
         return false;
@@ -44,25 +42,25 @@ bool InitServer(){
     
     // 서버 소켓 바인딩
     if (bind(serverSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
-        cerr << "Socket binding failed." << endl;
+        std::cerr << "Socket binding failed." << std::endl;
         closesocket(serverSocket);
         WSACleanup();
         return false;
     }
 
     if (listen(serverSocket, SOMAXCONN) == SOCKET_ERROR) {
-        cerr << "Listen failed." << endl;
+        std::cerr << "Listen failed." << std::endl;
         closesocket(serverSocket);
         WSACleanup();
         return false;
     }
 
-    cout << "Server is running on port 12345..." << endl;
+    std::cout << "Server is running on port 12345..." << std::endl;
     return true;
 }
 
 void ShutdownServer() {
-    cout << "Shutting down server..." << endl;
+    std::cout << "Shutting down server..." << std::endl;
     for (SOCKET client : clientSockets) {
         closesocket(client);
     }
@@ -122,7 +120,7 @@ int main() {
         }
 
         // 클라이언트 소켓에 이벤트가 있으면 데이터 recv
-        vector<SOCKET> disconnectedClients;
+        std::vector<SOCKET> disconnectedClients;
         for (SOCKET client : clientSockets) {
             if (FD_ISSET(client, &readSet)) {
                 char buffer[512];
@@ -144,11 +142,11 @@ int main() {
 
         // 종료된 클라이언트 제거
         for (SOCKET disconnectedClient : disconnectedClients) {
-            clientSockets.erase(remove(clientSockets.begin(), clientSockets.end(), disconnectedClient), clientSockets.end());
+            clientSockets.erase(std::remove(clientSockets.begin(), clientSockets.end(), disconnectedClient), clientSockets.end());
         }
     }
 
     ShutdownServer();
-    cout << "Server shutdown complete." << endl;
+    std::cout << "Server shutdown complete." << std::endl;
     return 0;
 }

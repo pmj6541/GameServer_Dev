@@ -5,10 +5,10 @@
 #include <windows.h>
 #include <vector>
 #include <thread>
+#include <string>
+#include <iostream>
 
 #pragma comment(lib, "ws2_32.lib")
-
-using namespace std;
 
 enum class IOOperation
 {
@@ -50,6 +50,6 @@ class IOCPServer {
     private:
         SOCKET m_serverSocket = INVALID_SOCKET; // 리스닝 소켓
         HANDLE m_hIOCP = nullptr;               // IOCP 포트 핸들
-        vector<thread> m_workerThreads;         // 워커 스레드 목록 
+        std::vector<std::thread> m_workerThreads;         // 워커 스레드 목록 
         bool m_bRunning = false;                // 서버 실행 상태
 };

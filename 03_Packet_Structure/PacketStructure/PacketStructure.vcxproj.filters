@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{4327f6a3-402e-489b-bbb6-ef5531b1976c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packet">
+      <UniqueIdentifier>{9d79dbea-b925-4d84-bfb6-0696c5bb5323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\IOCP">
+      <UniqueIdentifier>{edac26be-7e4c-4827-8743-8b349c0462f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Service">
+      <UniqueIdentifier>{6db21f7e-64a0-4683-92c1-5e666e246be7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Handler">
+      <UniqueIdentifier>{2fec4fa0-042a-4698-902f-c6370becc943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Service\Domain">
+      <UniqueIdentifier>{760c6e1e-91a4-4860-9ef3-4498b8a05359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packet\DTO">
+      <UniqueIdentifier>{9368b12a-3ac8-4b6a-b758-dd94fb9d7ee4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packet\Converter">
+      <UniqueIdentifier>{795d40d6-69e0-4f6b-94d6-c66b72e9ceb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packet\DTO\Request">
+      <UniqueIdentifier>{b718ba39-5179-4329-896c-56344c319c3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packet\DTO\Response">
+      <UniqueIdentifier>{188e234d-6649-49a4-8596-c5a288be5307}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\EnhanceType.h">
+      <Filter>소스 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Handler\Enhance\EnhanceHandler.h">
+      <Filter>소스 파일\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\Domain\CostItem.h">
+      <Filter>소스 파일\Service\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\Domain\Item.h">
+      <Filter>소스 파일\Service\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet\DTO\Response\EnhanceResponse.h">
+      <Filter>소스 파일\Packet\DTO\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ResultCode.h">
+      <Filter>소스 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer\PacketSerializer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet\DTO\ItemDTO.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet\DTO\CostItemDTO.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\EnhanceService.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer\EnhanceSerializer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer\Serializer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ByteBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet\DTO\EnhanceOptionsDTO.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet\Converter\Value\CostItemConverter.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\Domain\EnhanceOptions.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RecvContext.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Handler\Handler.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Handler\HandlerManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCP\IOCPServer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet\Converter\EnhanceConverter.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet\DTO\Request\EnhanceRequest.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\Domain\EnhanceData.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\Domain\EnhanceResult.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Handler\Enhance\EnhanceHandler.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Service\EnhanceService.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCP\IOCPServer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ByteBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Packet\Converter\EnhanceConverter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCP\main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
