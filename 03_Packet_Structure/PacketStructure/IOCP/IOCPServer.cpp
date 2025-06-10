@@ -35,8 +35,11 @@ bool IOCPServer::Initialize(int port, int maxClients) {
 }
 
 void IOCPServer::Run() {
-    handlerManager
-        .RegisterHandler(EOpcode::EnhanceRequest, std::make_unique<EnhanceHandler>());
+    handlerManager.Register(
+        EOpcode::EnhanceRequest, 
+        std::make_unique<EnhanceHandler>(), 
+        std::make_unique<EnhanceSerializer>()
+    );
 
     isRunning = true;
     std::cout << "Server is running..." << std::endl;
@@ -131,57 +134,75 @@ void IOCPServer::AcceptConnections() {
             std::cerr << "Failed to associate client socket with IOCP." << std::endl;
         } else {
             std::cout << "Client connected." << std::endl;
+
+            RecvContext* context = new RecvContext();
+            ZeroMemory(&context->overlapped, sizeof(OVERLAPPED));
+            context->socket = clientSocket;
+
+            WSABUF wsaBuf;
+            wsaBuf.buf = reinterpret_cast<char*>(context->buffer);
+            wsaBuf.len = sizeof(context->buffer);
+
+            DWORD flags = 0;
+            DWORD bytesReceived = 0;
+
+            int result = WSARecv(
+                clientSocket,
+                &wsaBuf,
+                1,
+                &bytesReceived,
+                &flags,
+                &context->overlapped,
+                NULL
+            );
+
+            if (result == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
+                std::cerr << "WSARecv failed." << std::endl;
+                closesocket(clientSocket);
+                delete context;
+            }
+
         }
     }
 }
 
 void IOCPServer::WorkerThread() {
-    //while (isRunning) {
-    //    DWORD bytesTransferred = 0;
-    //    ULONG_PTR completionKey = 0;
-    //    OVERLAPPED* overlapped = nullptr;
+    while (isRunning) {
+        DWORD bytesTransferred = 0;
+        ULONG_PTR completionKey = 0;
+        OVERLAPPED* overlapped = nullptr;
 
-    //    BOOL result = GetQueuedCompletionStatus(
-    //        iocpHandle, &bytesTransferred, &completionKey, &overlapped, INFINITE);
+        BOOL result = GetQueuedCompletionStatus(
+            iocpHandle, &bytesTransferred, &completionKey, &overlapped, INFINITE);
 
-    //    if (!result || bytesTransferred == 0) {
-    //        if (completionKey) {
-    //            SOCKET clientSocket = (SOCKET)completionKey;
-    //            closesocket(clientSocket);
-    //            std::cout << "Client disconnected." << std::endl;
-    //        }
-    //        continue;
-    //    }
+        if (!result || bytesTransferred == 0) {
+            if (completionKey) {
+                SOCKET clientSocket = (SOCKET)completionKey;
+                closesocket(clientSocket);
+                std::cout << "Client disconnected." << std::endl;
+            }
+            continue;
+        }
 
-    //    
-    //    RecvContext* context = reinterpret_cast<RecvContext*>(overlapped);
-    //    const uint8_t* rawData = context->buffer;
+        
+        RecvContext* context = reinterpret_cast<RecvContext*>(overlapped);
+        const uint8_t* rawData = context->buffer;
+        if (bytesTransferred > 0) {
+            ByteBuffer buffer(rawData, static_cast<size_t>(bytesTransferred));
+            // OPCode 추출
+            std::cout << "Check OPCode..." << std::endl;
+            auto opcodeOpt = Serializer::GetOpCode(rawData, bytesTransferred);
+            if (!opcodeOpt.has_value()) {
+                std::cerr << "Invalid opcode in received message." << std::endl;
+                continue;
+            }
 
-    //    if (bytesTransferred > 0) {
+            // OPCode 구간 점프
+            buffer.SetReadPos(2);  
 
-    //        
-    //        auto opcodeOpt = Serializer::GetOpCode(rawData, bytesTransferred);
-    //        if (!opcodeOpt.has_value()) {
-    //            std::cerr << "Invalid opcode in received message." << std::endl;
-    //            continue;
-    //        }
+            // Handle
+            handlerManager.Dispatch(static_cast<EOpcode>(opcodeOpt.value()), listenSocket, buffer);
 
-    //        ByteBuffer buffer(rawData, static_cast<size_t>(bytesTransferred));
-
-    //        switch (static_cast<EOpcode>(opcodeOpt.value())) {
-    //        case EOpcode::EnhanceRequest: {
-    //            EnhanceSerializer serializer;
-    //            EnhanceRequest request;
-    //            if (serializer.Deserialize(buffer)) {
-    //                std::cout << "EnhanceRequest deserialized successfully." << std::endl;
-    //                // ADD LOGIC
-    //            }
-    //            break;
-    //        }
-    //        default:
-    //            std::cerr << "Unhandled opcode: " << static_cast<int>(opcodeOpt.value()) << std::endl;
-    //            break;
-    //        }
-    //    }
-    //}
+        }
+    }
 }

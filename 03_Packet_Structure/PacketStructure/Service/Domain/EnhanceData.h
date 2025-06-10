@@ -3,8 +3,9 @@
 #include "../../Core/EnhanceType.h"
 #include "EnhanceOptions.h"
 #include "CostItem.h"
+#include "Domain.h"
 
-struct EnhanceData
+struct EnhanceData : public Domain
 {
     long UserId;
     long ItemUID;

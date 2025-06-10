@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b5535006-680d-402e-94e0-34ac1ad735a0}</ProjectGuid>
-    <RootNamespace>PacketStructure</RootNamespace>
+    <ProjectGuid>{46ef1779-8557-4efc-9861-5cb27e351a28}</ProjectGuid>
+    <RootNamespace>PacketStructureClient</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -128,46 +128,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Core\ByteBuffer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Core\ByteBuffer.h" />
+    <ClInclude Include="Core\EnhanceType.h" />
     <ClInclude Include="Core\PacketOpcode.h" />
     <ClInclude Include="Core\RecvContext.h" />
-    <ClInclude Include="Handler\Handler.h" />
-    <ClInclude Include="Handler\HandlerManager.h" />
-    <ClInclude Include="IOCP\IOCPServer.h" />
-    <ClInclude Include="Packet\Converter\EnhanceConverter.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="Packet\Converter\Value\CostItemConverter.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="Core\ResultCode.h" />
     <ClInclude Include="Packet\DTO\CostItemDTO.h" />
     <ClInclude Include="Packet\DTO\EnhanceOptionsDTO.h" />
     <ClInclude Include="Packet\DTO\ItemDTO.h" />
     <ClInclude Include="Packet\DTO\Request\EnhanceRequest.h" />
-    <ClInclude Include="Serializer\EnhanceSerializer.h" />
-    <ClInclude Include="Serializer\PacketSerializer.h" />
-    <ClInclude Include="Serializer\Serializer.h" />
-    <ClInclude Include="Service\Domain\CostItem.h" />
-    <ClInclude Include="Handler\Enhance\EnhanceHandler.h" />
     <ClInclude Include="Packet\DTO\Response\EnhanceResponse.h" />
-    <ClInclude Include="Core\EnhanceType.h" />
-    <ClInclude Include="Service\Domain\Domain.h" />
-    <ClInclude Include="Service\Domain\EnhanceData.h" />
-    <ClInclude Include="Service\Domain\EnhanceOptions.h" />
-    <ClInclude Include="Service\Domain\EnhanceResult.h" />
-    <ClInclude Include="Service\Domain\Item.h" />
-    <ClInclude Include="Core\ResultCode.h" />
-    <ClInclude Include="Service\EnhanceService.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Core\ByteBuffer.cpp" />
-    <ClCompile Include="Handler\Enhance\EnhanceHandler.cpp" />
-    <ClCompile Include="IOCP\IOCPServer.cpp" />
-    <ClCompile Include="IOCP\main.cpp" />
-    <ClCompile Include="Packet\Converter\EnhanceConverter.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Service\EnhanceService.cpp" />
+    <ClInclude Include="Serializer\EnhanceSerializer.h" />
+    <ClInclude Include="Serializer\Serializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

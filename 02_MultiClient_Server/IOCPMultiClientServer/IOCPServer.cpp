@@ -13,13 +13,13 @@ bool IOCPServer::Initserver(int port, int workerThreadCount) {
     // 윈속 초기화
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        cout << "WSAStartup failed." << endl;
+        std::cout << "WSAStartup failed." << std::endl;
         return false;
     }
 
     m_serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (m_serverSocket == INVALID_SOCKET) {
-        cout << "socket failed." << endl;
+        std::cout << "socket failed." << std::endl;
         WSACleanup();
         return false;
     }
@@ -30,14 +30,14 @@ bool IOCPServer::Initserver(int port, int workerThreadCount) {
     serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(m_serverSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
-        cerr << "bind failed." << endl;
+        std::cerr << "bind failed." << std::endl;
         closesocket(m_serverSocket);
         WSACleanup();
         return false;
     }
 
     if (listen(m_serverSocket, SOMAXCONN) == SOCKET_ERROR) {
-        cerr << "listen failed." << endl;
+        std::cerr << "listen failed." << std::endl;
         closesocket(m_serverSocket);
         WSACleanup();
         return false;
@@ -45,7 +45,7 @@ bool IOCPServer::Initserver(int port, int workerThreadCount) {
 
     m_hIOCP = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
     if (m_hIOCP == NULL) {
-        cerr << "CreateIoCompletionPort failed." << endl;
+        std::cerr << "CreateIoCompletionPort failed." << std::endl;
         closesocket(m_serverSocket);
         WSACleanup();
         return false;
@@ -63,7 +63,7 @@ bool IOCPServer::Initserver(int port, int workerThreadCount) {
     for (int i = 0; i < workerThreadCount; i++) {
         m_workerThreads.emplace_back(&IOCPServer::WorkerThread, this);
     }
-    cout << "Server initialized and listening on port " << port << endl;
+    std::cout << "Server initialized and listening on port " << port << std::endl;
 
     return true;
 }
@@ -113,7 +113,7 @@ void IOCPServer::Shutdown() {
     }
 
     WSACleanup();
-    cout << "Server shutdown complete." << endl;
+    std::cout << "Server shutdown complete." << std::endl;
         
 }
 void IOCPServer::WorkerThread()

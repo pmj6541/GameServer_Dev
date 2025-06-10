@@ -5,15 +5,9 @@
 #include <iostream>
 #include "../Handler.h"
 #include "../../Packet/DTO/Request/EnhanceRequest.h"
-#include "../../Packet/DTO/Response/EnhanceResponse.h"
-#include "../../Serializer/EnhanceSerializer.h"
-#include "../../Service/Domain/EnhanceData.h"
-#include "../../Service/Domain/EnhanceResult.h"
 
-
-
-class EnhanceHandler : public Handler
+class EnhanceHandler : public Handler<EnhanceRequest>
 {
     public:
-        void Handle(SOCKET clientSocket, const std::string& payload) override;
+        void HandleImpl(SOCKET clientSocket, const EnhanceRequest& data) override;
 };

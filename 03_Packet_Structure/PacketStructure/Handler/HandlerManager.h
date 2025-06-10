@@ -5,6 +5,8 @@
 #include "Handler.h"
 #include "../Core/PacketOpcode.h"
 #include <iostream>
+#include "../Service/Domain/Domain.h"
+#include "../Serializer/Serializer.h"
 
 
 class HandlerManager
@@ -16,17 +18,20 @@ class HandlerManager
             return instance;
         }
 
-        void RegisterHandler(EOpcode opcode, std::unique_ptr<Handler> handler)
+        void Register(EOpcode opcode, std::unique_ptr<IHandler> handler, std::unique_ptr<Serializer> serializer)
         {
             handlers[opcode] = std::move(handler);
+            serializers[opcode] = std::move(serializer);
         }
         
-        void Dispatch(EOpcode opcode, SOCKET clientSocket, const std::string& payload)
+        void Dispatch(EOpcode opcode, SOCKET clientSocket, ByteBuffer& buffer)
         {
-            auto it = handlers.find(opcode);
-            if (it != handlers.end())
+            auto handler = handlers.find(opcode);
+            auto serializer = serializers.find(opcode);
+            if (handler != handlers.end())
             {
-                it->second->Handle(clientSocket, payload);
+                std::shared_ptr<void> request = serializer->second->DeserializeRequest(buffer);
+                handler->second->Handle(clientSocket, request);
             }
             else
             {
@@ -40,5 +45,6 @@ class HandlerManager
         HandlerManager() = default;
         ~HandlerManager() = default;
         
-        std::unordered_map<EOpcode, std::unique_ptr<Handler>> handlers;
+        std::unordered_map<EOpcode, std::unique_ptr<IHandler>> handlers;
+        std::unordered_map<EOpcode, std::unique_ptr<Serializer>> serializers;
 };

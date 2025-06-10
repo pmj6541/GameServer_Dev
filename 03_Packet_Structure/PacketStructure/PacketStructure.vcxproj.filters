@@ -117,6 +117,12 @@
     <ClInclude Include="Service\Domain\EnhanceResult.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Core\PacketOpcode.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\Domain\Domain.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Handler\Enhance\EnhanceHandler.cpp">
